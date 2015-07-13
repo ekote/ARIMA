@@ -1,0 +1,5 @@
+package ARIMA
+
+class ARIMATest {
+
+}
