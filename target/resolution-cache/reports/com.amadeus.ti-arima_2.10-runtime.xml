@@ -7,8 +7,79 @@
 		revision="1.0-SNAPSHOT"
 		conf="runtime"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
-		date="20150710153627"/>
+		date="20150720112129"/>
 	<dependencies>
+		<module organisation="org.json4s" name="json4s-native_2.10">
+			<revision name="3.2.11" status="release" pubdate="20141023210851" resolver="public" artresolver="public" homepage="https://github.com/json4s/json4s" downloaded="true" searched="true" default="false" conf="default, compile, runtime, default(compile), master" position="31">
+				<license name="ASL" url="http://github.com/json4s/json4s/raw/HEAD/LICENSE"/>
+				<metadata-artifact status="successful" details="" size="2199" time="421" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-native_2.10\ivy-3.2.11.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-native_2.10\ivy-3.2.11.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/json4s/json4s-native_2.10/3.2.11/json4s-native_2.10-3.2.11.pom"/>
+				<caller organisation="com.amadeus.ti" name="arima_2.10" conf="compile, runtime" rev="3.2.11" rev-constraint-default="3.2.11" rev-constraint-dynamic="3.2.11" callerrev="1.0-SNAPSHOT"/>
+				<artifacts>
+					<artifact name="json4s-native_2.10" type="jar" ext="jar" status="successful" details="" size="69460" time="774" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-native_2.10\jars\json4s-native_2.10-3.2.11.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/json4s/json4s-native_2.10/3.2.11/json4s-native_2.10-3.2.11.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.json4s" name="json4s-core_2.10">
+			<revision name="3.2.11" status="release" pubdate="20141023210933" resolver="public" artresolver="public" homepage="https://github.com/json4s/json4s" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="32">
+				<license name="ASL" url="http://github.com/json4s/json4s/raw/HEAD/LICENSE"/>
+				<metadata-artifact status="successful" details="" size="2546" time="428" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-core_2.10\ivy-3.2.11.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-core_2.10\ivy-3.2.11.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/json4s/json4s-core_2.10/3.2.11/json4s-core_2.10-3.2.11.pom"/>
+				<caller organisation="org.json4s" name="json4s-native_2.10" conf="default, compile, runtime, master" rev="3.2.11" rev-constraint-default="3.2.11" rev-constraint-dynamic="3.2.11" callerrev="3.2.11"/>
+				<artifacts>
+					<artifact name="json4s-core_2.10" type="jar" ext="jar" status="successful" details="" size="597252" time="1516" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-core_2.10\jars\json4s-core_2.10-3.2.11.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/json4s/json4s-core_2.10/3.2.11/json4s-core_2.10-3.2.11.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scalap">
+			<revision name="2.10.0" status="release" pubdate="20121220023017" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="35">
+				<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html    "/>
+				<metadata-artifact status="no" details="" size="2556" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scalap\ivy-2.10.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scalap/2.10.0/scalap-2.10.0.pom"/>
+				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
+				<artifacts>
+					<artifact name="scalap" type="jar" ext="jar" status="no" details="" size="855012" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scalap\jars\scalap-2.10.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scalap/2.10.0/scalap-2.10.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scala-lang" name="scala-compiler">
+			<revision name="2.10.0" status="release" pubdate="20121220022948" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="36">
+				<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html    "/>
+				<metadata-artifact status="no" details="" size="2861" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-compiler\ivy-2.10.0.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.10.0/scala-compiler-2.10.0.pom"/>
+				<caller organisation="org.scala-lang" name="scalap" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="2.10.0"/>
+				<artifacts>
+					<artifact name="scala-compiler" type="jar" ext="jar" status="successful" details="" size="14149435" time="11135" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-compiler\jars\scala-compiler-2.10.0.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-compiler/2.10.0/scala-compiler-2.10.0.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.thoughtworks.paranamer" name="paranamer">
+			<revision name="2.6" status="release" pubdate="20131008235654" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="34">
+				<metadata-artifact status="no" details="" size="4165" time="0" location="C:\Users\wangj\.ivy2\cache\com.thoughtworks.paranamer\paranamer\ivy-2.6.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.6/paranamer-2.6.pom"/>
+				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="2.6" rev-constraint-default="2.6" rev-constraint-dynamic="2.6" callerrev="3.2.11"/>
+				<artifacts>
+					<artifact name="paranamer" type="jar" ext="jar" status="no" details="" size="32806" time="0" location="C:\Users\wangj\.ivy2\cache\com.thoughtworks.paranamer\paranamer\jars\paranamer-2.6.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/thoughtworks/paranamer/paranamer/2.6/paranamer-2.6.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.json4s" name="json4s-ast_2.10">
+			<revision name="3.2.11" status="release" pubdate="20141023210823" resolver="public" artresolver="public" homepage="https://github.com/json4s/json4s" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="33">
+				<license name="ASL" url="http://github.com/json4s/json4s/raw/HEAD/LICENSE"/>
+				<metadata-artifact status="successful" details="" size="2013" time="431" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-ast_2.10\ivy-3.2.11.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-ast_2.10\ivy-3.2.11.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.10/3.2.11/json4s-ast_2.10-3.2.11.pom"/>
+				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="3.2.11" rev-constraint-default="3.2.11" rev-constraint-dynamic="3.2.11" callerrev="3.2.11"/>
+				<artifacts>
+					<artifact name="json4s-ast_2.10" type="jar" ext="jar" status="successful" details="" size="84053" time="565" location="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-ast_2.10\jars\json4s-ast_2.10-3.2.11.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/json4s/json4s-ast_2.10/3.2.11/json4s-ast_2.10-3.2.11.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
 		<module organisation="org.scalanlp" name="breeze-natives_2.10">
 			<revision name="0.10" status="release" pubdate="20141006152528" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://scalanlp.org/" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="14">
 				<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.html"/>
@@ -35,7 +106,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-win-i686">
 			<revision name="1.1" status="release" pubdate="20131011184118" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="30">
-				<metadata-artifact status="successful" details="" size="5271" time="530" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="5271" time="434" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-i686/1.1/netlib-native_system-win-i686-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-win-i686" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="561459" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\jars\netlib-native_system-win-i686-1.1-natives.jar">
@@ -46,7 +117,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-win-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011184207" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="29">
-				<metadata-artifact status="successful" details="" size="5130" time="520" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="5130" time="448" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-win-x86_64/1.1/netlib-native_system-win-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-win-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="637428" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\jars\netlib-native_system-win-x86_64-1.1-natives.jar">
@@ -57,7 +128,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-linux-armhf">
 			<revision name="1.1" status="release" pubdate="20131011193120" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="28">
-				<metadata-artifact status="successful" details="" size="4780" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="4780" time="442" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-armhf/1.1/netlib-native_system-linux-armhf-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-linux-armhf" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="310891" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\jars\netlib-native_system-linux-armhf-1.1-natives.jar">
@@ -68,7 +139,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-linux-i686">
 			<revision name="1.1" status="release" pubdate="20131011193027" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="27">
-				<metadata-artifact status="successful" details="" size="4869" time="522" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="4869" time="446" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-i686/1.1/netlib-native_system-linux-i686-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-linux-i686" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="435365" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-i686\jars\netlib-native_system-linux-i686-1.1-natives.jar">
@@ -79,7 +150,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-linux-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011192927" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="26">
-				<metadata-artifact status="successful" details="" size="3930" time="524" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3930" time="443" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-linux-x86_64/1.1/netlib-native_system-linux-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-linux-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="458605" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-x86_64\jars\netlib-native_system-linux-x86_64-1.1-natives.jar">
@@ -90,7 +161,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_system-osx-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011184035" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="24">
-				<metadata-artifact status="successful" details="" size="3912" time="531" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-osx-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-osx-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3912" time="447" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-osx-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-osx-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_system-osx-x86_64/1.1/netlib-native_system-osx-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_system-osx-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="553993" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-osx-x86_64\jars\netlib-native_system-osx-x86_64-1.1-natives.jar">
@@ -101,7 +172,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="native_system-java">
 			<revision name="1.1" status="release" pubdate="20131011183956" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="25">
-				<metadata-artifact status="successful" details="" size="3988" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_system-java\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_system-java\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3988" time="436" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_system-java\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_system-java\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/native_system-java/1.1/native_system-java-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_system-linux-x86_64" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_system-win-i686" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_system-linux-i686" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
@@ -117,7 +188,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-linux-armhf">
 			<revision name="1.1" status="release" pubdate="20131011191624" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="23">
-				<metadata-artifact status="successful" details="" size="3897" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-armhf\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-armhf\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3897" time="441" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-armhf\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-armhf\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-armhf/1.1/netlib-native_ref-linux-armhf-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-linux-armhf" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="1208080" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-armhf\jars\netlib-native_ref-linux-armhf-1.1-natives.jar">
@@ -128,7 +199,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-win-i686">
 			<revision name="1.1" status="release" pubdate="20131011183716" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="22">
-				<metadata-artifact status="successful" details="" size="4471" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="4471" time="429" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-i686/1.1/netlib-native_ref-win-i686-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-win-i686" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="1826785" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-i686\jars\netlib-native_ref-win-i686-1.1-natives.jar">
@@ -139,7 +210,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-win-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011183904" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="21">
-				<metadata-artifact status="successful" details="" size="4378" time="511" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="4378" time="460" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-win-x86_64/1.1/netlib-native_ref-win-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-win-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="2305169" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-win-x86_64\jars\netlib-native_ref-win-x86_64-1.1-natives.jar">
@@ -150,7 +221,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-linux-i686">
 			<revision name="1.1" status="release" pubdate="20131011191458" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="20">
-				<metadata-artifact status="successful" details="" size="3739" time="531" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3739" time="442" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-i686\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-i686\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-i686/1.1/netlib-native_ref-linux-i686-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-linux-i686" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="1489507" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-i686\jars\netlib-native_ref-linux-i686-1.1-natives.jar">
@@ -161,7 +232,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-linux-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011191310" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="19">
-				<metadata-artifact status="successful" details="" size="3309" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3309" time="448" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-linux-x86_64/1.1/netlib-native_ref-linux-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-linux-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="1749371" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-linux-x86_64\jars\netlib-native_ref-linux-x86_64-1.1-natives.jar">
@@ -172,7 +243,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="netlib-native_ref-osx-x86_64">
 			<revision name="1.1" status="release" pubdate="20131011183537" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="16">
-				<metadata-artifact status="successful" details="" size="3620" time="531" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3620" time="455" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/netlib-native_ref-osx-x86_64/1.1/netlib-native_ref-osx-x86_64-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="all" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1.2"/>
 				<artifacts>
 					<artifact name="netlib-native_ref-osx-x86_64" type="jar" ext="jar" extra-classifier="natives" status="no" details="" size="1839499" time="0" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_ref-osx-x86_64\jars\netlib-native_ref-osx-x86_64-1.1-natives.jar">
@@ -183,7 +254,7 @@
 		</module>
 		<module organisation="com.github.fommil.netlib" name="native_ref-java">
 			<revision name="1.1" status="release" pubdate="20131011183421" resolver="public" artresolver="public" homepage="" downloaded="true" searched="true" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="17">
-				<metadata-artifact status="successful" details="" size="3973" time="510" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_ref-java\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_ref-java\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom"/>
+				<metadata-artifact status="successful" details="" size="3973" time="458" location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_ref-java\ivy-1.1.xml" searched="true" original-local-location="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\native_ref-java\ivy-1.1.xml.original" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/fommil/netlib/native_ref-java/1.1/native_ref-java-1.1.pom"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_ref-linux-armhf" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_ref-osx-x86_64" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
 				<caller organisation="com.github.fommil.netlib" name="netlib-native_ref-win-i686" conf="compile, runtime" rev="1.1" rev-constraint-default="1.1" rev-constraint-dynamic="1.1" callerrev="1.1"/>
@@ -399,6 +470,7 @@
 				<metadata-artifact status="no" details="" size="2870" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-reflect\ivy-2.10.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.10.3/scala-reflect-2.10.3.pom"/>
 				<caller organisation="org.scalamacros" name="quasiquotes_2.10" conf="compile" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.0.0-M8"/>
 				<caller organisation="org.scalamacros" name="quasiquotes_2.10" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.0.0"/>
+				<caller organisation="org.scala-lang" name="scala-compiler" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="2.10.0"/>
 				<caller organisation="org.scalanlp" name="breeze-macros_2.10" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="0.3.1"/>
 				<caller organisation="org.spire-math" name="spire_2.10" conf="compile, runtime" rev="2.10.2" rev-constraint-default="2.10.2" rev-constraint-dynamic="2.10.2" callerrev="0.7.4"/>
 				<caller organisation="org.spire-math" name="spire-macros_2.10" conf="compile, runtime" rev="2.10.2" rev-constraint-default="2.10.2" rev-constraint-dynamic="2.10.2" callerrev="0.7.4"/>
@@ -406,6 +478,12 @@
 					<artifact name="scala-reflect" type="jar" ext="jar" status="no" details="" size="3206936" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-reflect\jars\scala-reflect-2.10.3.jar">
 						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scala-lang/scala-reflect/2.10.3/scala-reflect-2.10.3.jar"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="2.10.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
+				<evicted-by rev="2.10.3"/>
+				<caller organisation="org.scala-lang" name="scala-compiler" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="2.10.0"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 			<revision name="2.10.2" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
@@ -423,19 +501,32 @@
 			<revision name="2.10.4" status="release" pubdate="20140318174629" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://www.scala-lang.org/" extra-info.apiURL="http://www.scala-lang.org/api/2.10.4/" downloaded="false" searched="false" default="false" conf="default, compile, runtime(*), master(compile), runtime, default(compile), compile(*), master" position="0">
 				<license name="BSD-like" url="http://www.scala-lang.org/downloads/license.html          "/>
 				<metadata-artifact status="no" details="" size="2517" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-library\ivy-2.10.4.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scala-lang/scala-library/2.10.4/scala-library-2.10.4.pom"/>
-				<caller organisation="org.scala-lang" name="scala-reflect" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.10.3"/>
 				<caller organisation="org.scalanlp" name="breeze-natives_2.10" conf="default, compile, runtime, master" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="0.10"/>
-				<caller organisation="org.scalamacros" name="quasiquotes_2.10" conf="compile" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.0.0-M8"/>
+				<caller organisation="org.json4s" name="json4s-ast_2.10" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
 				<caller organisation="org.scalanlp" name="breeze_2.10" conf="default, compile, runtime, master" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="0.10"/>
 				<caller organisation="org.scalamacros" name="quasiquotes_2.10" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.0.0"/>
+				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
+				<caller organisation="org.scala-lang" name="scala-compiler" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="2.10.0"/>
+				<caller organisation="org.spire-math" name="spire_2.10" conf="compile, runtime" rev="2.10.2" rev-constraint-default="2.10.2" rev-constraint-dynamic="2.10.2" callerrev="0.7.4"/>
+				<caller organisation="org.scala-lang" name="scala-reflect" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.10.3"/>
+				<caller organisation="org.scalamacros" name="quasiquotes_2.10" conf="compile" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="2.0.0-M8"/>
 				<caller organisation="com.amadeus.ti" name="arima_2.10" conf="compile, runtime" rev="2.10.4" rev-constraint-default="2.10.4" rev-constraint-dynamic="2.10.4" callerrev="1.0-SNAPSHOT"/>
 				<caller organisation="org.scalanlp" name="breeze-macros_2.10" conf="compile, runtime" rev="2.10.3" rev-constraint-default="2.10.3" rev-constraint-dynamic="2.10.3" callerrev="0.3.1"/>
-				<caller organisation="org.spire-math" name="spire_2.10" conf="compile, runtime" rev="2.10.2" rev-constraint-default="2.10.2" rev-constraint-dynamic="2.10.2" callerrev="0.7.4"/>
 				<caller organisation="org.spire-math" name="spire-macros_2.10" conf="compile, runtime" rev="2.10.2" rev-constraint-default="2.10.2" rev-constraint-dynamic="2.10.2" callerrev="0.7.4"/>
+				<caller organisation="org.json4s" name="json4s-native_2.10" conf="default, compile, runtime, master" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
 				<artifacts>
 					<artifact name="scala-library" type="jar" ext="jar" status="no" details="" size="7126372" time="0" location="C:\Users\wangj\.ivy2\cache\org.scala-lang\scala-library\jars\scala-library-2.10.4.jar">
 						<origin-location is-local="false" location="UNKNOWN"/>
 					</artifact>
+				</artifacts>
+			</revision>
+			<revision name="2.10.0" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">
+				<evicted-by rev="2.10.4"/>
+				<caller organisation="org.json4s" name="json4s-ast_2.10" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
+				<caller organisation="org.json4s" name="json4s-core_2.10" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
+				<caller organisation="org.scala-lang" name="scala-compiler" conf="compile, runtime" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="2.10.0"/>
+				<caller organisation="org.json4s" name="json4s-native_2.10" conf="default, compile, runtime, master" rev="2.10.0" rev-constraint-default="2.10.0" rev-constraint-dynamic="2.10.0" callerrev="3.2.11"/>
+				<artifacts>
 				</artifacts>
 			</revision>
 			<revision name="2.10.2" evicted="latest-revision" evicted-reason="" downloaded="false" searched="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="-1">

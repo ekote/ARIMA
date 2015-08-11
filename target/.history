@@ -4,3 +4,15 @@ eclipse
 compile
 ‡H
 compile
+test
+‡H
+test
+‡H
+test
+test1
+test
+‡Htest
+test
+sbt compile
+compile
+eclipse

@@ -4,7 +4,7 @@
 		module="arima_2.10"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20150710153627"
+		publication="20150720112129"
 	>
 		<description>
 		ARIMA
@@ -39,6 +39,7 @@
 		<dependency org="com.github.fommil.netlib" name="all" rev="1.1.2" conf="compile->default(compile)">
 			<artifact name="all" type="pom" ext="pom" conf="pom"/>
 		</dependency>
+		<dependency org="org.json4s" name="json4s-native_2.10" rev="3.2.11" conf="compile->default(compile)"/>
 		<dependency org="org.specs2" name="specs2-core_2.10" rev="3.6.2" conf="test->default(compile)"/>
 	</dependencies>
 </ivy-module>

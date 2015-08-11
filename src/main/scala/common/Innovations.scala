@@ -12,13 +12,16 @@ object Innovations {
   }
 
   def innovation_update(x: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double)): (Double, Double) = {  
+    val model2 = model.copy( _3 = 1.0)
     val (xhat, v) = innovation_kernel(x = x, model = model)
     val n = x.length.toDouble 
     val sigma2 = sum(pow((x - xhat), 2) :/ v) / n
     val phi = model._1
     val theta = model._2
     var p = phi.length
+ //   if (!any(phi)) p = 0
     var q = theta.length
+ //   if (!any(theta)) q = 0
     val loglike = -(n / 2) * log(2 * constants.Pi * sigma2) - sum(log(v)) / 2 - n / 2
     val aicc = -2 * loglike + 2 * (p + q + 1) * n / (n - p - q - 2)
     (sigma2, aicc)
@@ -72,7 +75,8 @@ object Innovations {
     }
 
     for (n <- m to N - 1) {
-      val A = phi dot reverse(x(n - p to n - 1))
+      var A = 0.0
+      if (phi.length != 0) A = phi dot reverse(x(n - p to n - 1))
       var B = 0.0
       for (i <- 1 to q) {
         B += Theta(n - 1, i - 1) * (x(n - i) - xhat(n - i))

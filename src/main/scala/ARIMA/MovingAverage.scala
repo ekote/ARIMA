@@ -12,6 +12,7 @@ package ARIMA
 import breeze.linalg.{ DenseMatrix, DenseVector }
 import breeze.numerics.pow
 import stat.StatDenseVector
+import common.Forecast._
 
 // Implementation of the Innovations Algorithm to estimate the coefficient of MA model.
 
@@ -70,19 +71,21 @@ class MovingAverage(data: Array[Double], q: Int, recursion_level: Int) extends P
     //   println("sigma^2 = " + sigma2)
     //   println ("se_theta = " + setheta)
 
-    new MovingAverageModel(y, mu, (opttheta, sigma2, setheta))
+    new MovingAverageModel(x, mu, (opttheta, sigma2, setheta))
 
   }
 }
 
-class MovingAverageModel(y: StatDenseVector, mu: Double, result: (DenseVector[Double], Double, DenseVector[Double])) {
+class MovingAverageModel(y: DenseVector[Double], mu: Double, result: (DenseVector[Double], Double, DenseVector[Double])) {
 
   val theta = result._1
   val sigma2 = result._2
   val se_theta = result._3
+  val model = (DenseVector[Double](), theta, sigma2)
 
-  def predict(predictionLength: Int = 12): Array[Double] = {
-    null
+  def predict(predictionLength: Int = 12, enableBound: Boolean = false, leastBound: Int = 0, upperBound: Int = 60000): Array[Double] = {
+    val (pred, se, l, u) = forecast(x = y, xv = List(), model = model, d = 0, h = predictionLength, k = 1, demean = true, enableBound = enableBound, leastBound = leastBound, upperBound = upperBound)
+    pred.toArray
   }
 
   def print_Result(): Unit = {

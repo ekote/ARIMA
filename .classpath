@@ -35,6 +35,12 @@
   <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-linux-armhf\jars\netlib-native_system-linux-armhf-1.1-natives.jar"/>
   <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-x86_64\jars\netlib-native_system-win-x86_64-1.1-natives.jar"/>
   <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\com.github.fommil.netlib\netlib-native_system-win-i686\jars\netlib-native_system-win-i686-1.1-natives.jar"/>
+  <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-native_2.10\jars\json4s-native_2.10-3.2.11.jar"/>
+  <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-core_2.10\jars\json4s-core_2.10-3.2.11.jar"/>
+  <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.json4s\json4s-ast_2.10\jars\json4s-ast_2.10-3.2.11.jar"/>
+  <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\com.thoughtworks.paranamer\paranamer\jars\paranamer-2.6.jar"/>
+  <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.scala-lang\scalap\jars\scalap-2.10.0.jar"/>
+  <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_COMPILER_CONTAINER"/>
   <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.specs2\specs2-core_2.10\jars\specs2-core_2.10-3.6.2.jar"/>
   <classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
   <classpathentry kind="lib" path="C:\Users\wangj\.ivy2\cache\org.specs2\specs2-matcher_2.10\jars\specs2-matcher_2.10-3.6.2.jar"/>

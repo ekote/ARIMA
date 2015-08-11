@@ -281,7 +281,7 @@ object ARIMAUtils {
 
   def FromSymmetricStorageUpper(x: DenseVector[Double]): DenseMatrix[Double] = {
     val l = x.length
-    val n = ((-1 + sqrt(1 + 8 * l)) / 2).toInt
+    val n = ((-1.0 + sqrt(1.0 + 8.0 * l)) / 2.0).toInt
     val z = lower_tri(DenseMatrix.zeros[Double](n, n), diag = true).map(v => if (v) 1.0 else 0.0)
     var count = 0
     for (i <- 0 until z.cols) {
@@ -292,7 +292,7 @@ object ARIMAUtils {
         }
       }
     }
-    if (count != l - 1) println("warning: number of items to replace is not a multiple of replacement length")
+    if (count != l) println("warning: number of items to replace is not a multiple of replacement length")
     val ztranspose = z.t
     z + ztranspose - diag(diag(ztranspose))
   }

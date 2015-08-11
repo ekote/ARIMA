@@ -1,0 +1,86 @@
+[0m[[0minfo[0m] [0mTest1[0m
+[0m[[0minfo[0m] [0m[0m
+[0m[[0minfo[0m] [0m This is a specification to check ARIMA model based on R function arma and forecast in package itsmr[0m
+[0m[[0minfo[0m] [0m  'Note: itsmr calls arima in R stats'[0m
+[0m[[0minfo[0m] [0m Test R code is as following:[0m
+[0m[[0minfo[0m] [0m  [0m
+[0m[[0minfo[0m] [0m  library(itsmr)[0m
+[0m[[0minfo[0m] [0m  data <- read.csv("D:/workspace/ARIMA/src/test/resources/timeseries_ppi.csv")[0m
+[0m[[0minfo[0m] [0m  attach(data)[0m
+[0m[[0minfo[0m] [0m  y <- ppi[0m
+[0m[[0minfo[0m] [0m  e = Resid(y,xv = c("diff", 1))[0m
+[0m[[0minfo[0m] [0m  a = autofit(e)[0m
+[0m[[0minfo[0m] [0m  # a = arma(e,3,2)[0m
+[0m[[0minfo[0m] [0m  # which is equvalent to call arima(e,order = c(3,0,2)) in R stats[0m
+[0m[[0minfo[0m] [0m  forecast(y,xv = c("diff",1), a, h = 12)[0m
+[0m[[0minfo[0m] [0m  [0m
+[0m[[0minfo[0m] [0m [32m+[0m The length of phi should be 3[0m
+[0m[[0minfo[0m] [0m [32m+[0m The length of theta should be 2[0m
+[0m[[0minfo[0m] [0m [32m+[0m phi1 is around 0.1813941 +- 0.1[0m
+[0m[[0minfo[0m] [0m [32m+[0m phi2 is around -0.6311208 +- 0.1[0m
+[0m[[0minfo[0m] [0m [32m+[0m phi3 is around 0.6235352 +- 0.1[0m
+[0m[[0minfo[0m] [0m [32m+[0m theta1 is around 0.3484732 +- 0.1[0m
+[0m[[0minfo[0m] [0m [32m+[0m theta2 is around 0.8860058 +- 0.1[0m
+[0m[[0minfo[0m] [0m [32m+[0m aicc is around 380.704 +- 0.1[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m Now test forecasting[0m
+[0m[[0minfo[0m] [0m predictions, Standard errors (not included if there is a log transform)[0m
+[0m[[0minfo[0m] [0m LowerBound, UpperBound of the predictions[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred1[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred2[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred3[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred4[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred5[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred6[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred7[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred8[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred9[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred10[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred11[0m
+[0m[[0minfo[0m] [0m [32m+[0m pred12[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE1[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE2[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE3[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE4[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE5[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE6[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE7[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE8[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE9[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE10[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE11[0m
+[0m[[0minfo[0m] [0m [32m+[0m sqrtMSE12[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [32m+[0m l1[0m
+[0m[[0minfo[0m] [0m [32m+[0m l2[0m
+[0m[[0minfo[0m] [0m [32m+[0m l3[0m
+[0m[[0minfo[0m] [0m [32m+[0m l4[0m
+[0m[[0minfo[0m] [0m [32m+[0m l5[0m
+[0m[[0minfo[0m] [0m [32m+[0m l6[0m
+[0m[[0minfo[0m] [0m [32m+[0m l7[0m
+[0m[[0minfo[0m] [0m [32m+[0m l8[0m
+[0m[[0minfo[0m] [0m [32m+[0m l9[0m
+[0m[[0minfo[0m] [0m [32m+[0m l10[0m
+[0m[[0minfo[0m] [0m [32m+[0m l11[0m
+[0m[[0minfo[0m] [0m [32m+[0m l12[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [32m+[0m r1[0m
+[0m[[0minfo[0m] [0m [32m+[0m r2[0m
+[0m[[0minfo[0m] [0m [32m+[0m r3[0m
+[0m[[0minfo[0m] [0m [32m+[0m r4[0m
+[0m[[0minfo[0m] [0m [32m+[0m r5[0m
+[0m[[0minfo[0m] [0m [32m+[0m r6[0m
+[0m[[0minfo[0m] [0m [32m+[0m r7[0m
+[0m[[0minfo[0m] [0m [32m+[0m r8[0m
+[0m[[0minfo[0m] [0m [32m+[0m r9[0m
+[0m[[0minfo[0m] [0m [32m+[0m r10[0m
+[0m[[0minfo[0m] [0m [32m+[0m r11[0m
+[0m[[0minfo[0m] [0m [32m+[0m r12[0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m [0m
+[0m[[0minfo[0m] [0m[0m
+[0m[[0minfo[0m] [0mTotal for specification Test1[0m
+[0m[[0minfo[0m] [0m[36mFinished in 30 ms[0m[0m
+[0m[[0minfo[0m] [0m[36m[0m[36m56 examples, 0 failure, 0 error[0m[0m
+[0m[[0minfo[0m] [0m[0m

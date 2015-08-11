@@ -42,9 +42,12 @@ object ARIMAIdTransUtils {
     val xt1 = x(k - 1 until n)
     val tt = DenseVector.rangeD(k, n + 1)
     val lm = new OLSMultipleLinearRegression()
-    val xtt = xt1.toArray.zip(tt.toArray).map(v => Array(v._1, v._2))
+    var xtt = xt1.toArray.zip(tt.toArray).map(v => Array(v._1, v._2))
+    if (k > 1) {
+      val yt1 = z(::, 1 until z.cols)
+      for (i <- 0 until yt1.cols) xtt = xtt.zip(yt1(::, i).toArray).map(v => v._1 :+ v._2)
+    }
     lm.newSampleData(yt.toArray, xtt)
-    // if k <= 1 another lm
     val STAT = lm.estimateRegressionParameters()(1) / lm.estimateRegressionParametersStandardErrors()(1)
     val tablepositive = DenseMatrix((4.38, 4.15, 4.04, 3.99, 3.98, 3.96), (3.95,
       3.8, 3.73, 3.69, 3.68, 3.66), (3.6, 3.5, 3.45, 3.43,
@@ -61,7 +64,9 @@ object ARIMAIdTransUtils {
     for (i <- (0 until tablen)) {
       tableipl(i) = LinearInterpolator(tableT, table(::, i)).apply(n)
     }
-    val interpol = LinearInterpolator(tableipl, tablep).apply(STAT)
+    var interpol = LinearInterpolator(tableipl, tablep).apply(STAT)
+    if (interpol <= 0) interpol = 0.01
+    if (interpol > 1) interpol = 1.0
     println("warning : p-value greater than printed p-value")
     var PVAL = interpol
     if (alternative == "explosive") PVAL = 1 - interpol
@@ -131,7 +136,7 @@ object ARIMAIdTransUtils {
       if (differences != 0) {
         if (xv(k - 1) == "diff") {
           val lag = xv(k).toInt
-          y = diff(y, lag, differences = differences)
+          y = diff(y, lag = lag, differences = differences)
           differences = 0
           k += 2
         } else {
@@ -150,6 +155,7 @@ object ARIMAIdTransUtils {
         y = y - trend(y, p)
         k = k + 2
       } else {
+        println(xv)
         sys.error("x vector transformation is invalid, please verify diff and d")
       }
     }

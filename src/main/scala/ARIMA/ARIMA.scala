@@ -9,18 +9,19 @@
 
 package ARIMA
 
-import breeze.linalg.{DenseVector, DenseMatrix, max, inv, diag, sum, all, reverse}
-import breeze.numerics.{abs, log, NaN, pow, sqrt, exp}
-import breeze.optimize.{ApproximateGradientFunction, LBFGS, DiffFunction}
+import breeze.linalg.{ DenseVector, DenseMatrix, max, inv, diag, sum, all, reverse }
+import breeze.numerics.{ abs, log, NaN, pow, sqrt, exp }
+import breeze.optimize.{ ApproximateGradientFunction, LBFGS, DiffFunction }
 import breeze.stats.mean
 import common.ARIMAUtils._
 import common.ARIMAIdTransUtils._
 import common.Innovations._
+import common.Forecast._
 import stat.StatDenseVector
 import stat.GradientApproximation._
 
 class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: List[String] = List(), pAppro: Int = 30, demean: Boolean = true,
-  MeanMLEQ: Boolean = false, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1)) extends Preprocessing(data: Array[Double]) {
+  MeanMLEQ: Boolean = false, Box_Cox: Boolean = false, Lambda: Double = 0.5, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1)) extends Preprocessing(data: Array[Double]) {
 
   private val p = order._1
   private val d = order._2
@@ -32,11 +33,11 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
 
   def checkOrder: Boolean = p + q + 10 > n - 1 || p < 0 || q < 0 || p > maxOrder || q > maxOrder
 
-  def Hannan_Rissanen(y : DenseVector[Double]): (DenseVector[Double], DenseVector[Double], Double, DenseVector[Double], DenseVector[Double]) = {
+  def Hannan_Rissanen(y: DenseVector[Double]): (DenseVector[Double], DenseVector[Double], Double, DenseVector[Double], DenseVector[Double]) = {
     val n = y.length
     val Z = DenseMatrix.zeros[Double](n - m - k, p + q)
     def slice(i: Int, x: DenseVector[Double], pq: Int): DenseVector[Double] = reverse(x((m + k + i - pq) to (m + k + i - 1)))
-    
+
     for (i <- m to n - 1) z(i) = ARErrEst(y, i, initphi)
     for (i <- 0 to n - m - k - 1) {
       val temp = slice(i, z, q)
@@ -62,16 +63,15 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
   }
 
   def FitARMA(z: DenseVector[Double], p: Int, q: Int, pAppro: Int = 30, demean: Boolean = true,
-    MeanMLEQ: Boolean = false, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1))
-  : (Double, DenseVector[Double], DenseVector[Double], Double, Double, Double, DenseVector[Double], DenseMatrix[Double], DenseVector[Double], DenseVector[Double], Boolean, Int, Boolean, Boolean, (Int, Int, Int)) = {
+    MeanMLEQ: Boolean = false, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1)): (Double, DenseVector[Double], DenseVector[Double], Double, Double, Double, DenseVector[Double], DenseMatrix[Double], DenseVector[Double], DenseVector[Double], Boolean, Int, Boolean, Boolean, (Int, Int, Int)) = {
     var Z = z
     var mz = mean(Z)
-//    if (d > 0) Z = diff(x = z, lag = diffLag, differences = d)
+    //    if (d > 0) Z = diff(x = z, lag = diffLag, differences = d)
     if (!demean) mz = 0
     val y = Z - mz
     var pApp = pAppro
     if (q == 0) pApp = p
-    var ans = GetFitARMA(y = y, p = p, q = q, pAppro = pApp)
+    var ans = GetFitARMA(y = y, p = p, q = q, pAppro = pApp, start_params = start_params)
     var LL = ans._1
     var iter = 0
     var mu = 0.0
@@ -93,7 +93,7 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
         LL = ans._1
         etol = abs(LL - LLPrev) / LLPrev
         convergence = ans._5
-        println(convergence)
+        //        println(convergence)
         if (!convergence) sys.error("GetARFit returned convergence = " + convergence)
       }
     }
@@ -131,13 +131,14 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
     if (all(start_params)) {
       xinit = start_params
     }
-    if (start_params.length != p + q) {
+    if (start_params.length != p + q || start_params.length == 0) {
       println("GetARMAFit: init length not correct. Set to zero.")
       xinit = DenseVector.zeros[Double](p + q)
-    }
-    if (max(abs(start_params)) > 0.99) {
-      println("GetARMAFit: init parameter setting outside (-0.99,0.99). Reset to 0.")
-      xinit = DenseVector.zeros[Double](p + q)
+    } else {
+      if (max(abs(start_params)) > 0.99) {
+        println("GetARMAFit: init parameter setting outside (-0.99,0.99). Reset to 0.")
+        xinit = DenseVector.zeros[Double](p + q)
+      }
     }
     val n = y.length
     val penaltyLoglikelihood = (-n / 2 * log(sum(pow(y, 2)) / n)) - 10000
@@ -145,7 +146,7 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
       pApp = p
     }
     val CD = ChampernowneD(z = y, p = pApp, MeanZero = true)
-    val LBFGS = new LBFGS[DenseVector[Double]](maxIter = 100, m = 7, tolerance = 1.0E-10)
+    val LBFGS = new LBFGS[DenseVector[Double]](maxIter = 100000, m = 7, tolerance = 1.0E-10)
     if (p > 0 && q > 0) {
       def EntropyARMA(x: DenseVector[Double]): Double = {
         if (max(abs(x)) > 0.99) -penaltyLoglikelihood + pow(max(abs(x)), 2)
@@ -158,7 +159,7 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
         }
       }
       val gradient = new ApproximateGradientFunction(f = EntropyARMA, epsilon = 1.0E-10)
-/*      val entropyFun = new DiffFunction[DenseVector[Double]] {
+      /*      val entropyFun = new DiffFunction[DenseVector[Double]] {
         def calculate(x: DenseVector[Double]) = {
           println(x)
           (EntropyARMA(x), gradientCenter4Approximate(EntropyARMA, x, 1.0E-5))
@@ -166,25 +167,25 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
       }*/
       var zpar = xinit
       var entropy = EntropyARMA(zpar)
-      val entropyFundefault = new DiffFunction[DenseVector[Double]] {     
+      val entropyFundefault = new DiffFunction[DenseVector[Double]] {
         def calculate(x: DenseVector[Double]) = {
-           if (entropy > gradient.valueAt(x)) {
-             zpar = x
-             entropy = gradient.valueAt(x)
-           }
+          if (entropy > gradient.valueAt(x)) {
+            zpar = x
+            entropy = gradient.valueAt(x)
+          }
           gradient.calculate(x)
         }
       }
 
-      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)    
+      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)
       // another optimizer could be used here, to be implmented.
-      
+
       loglikelihood = entropy
       convergence = statedef.converged
       phiHat = PacfToAR(zpar(0 until p))
       thetaHat = PacfToAR(zpar(p until p + q))
     }
-    
+
     if (p > 0 && q == 0) {
       def EntropyARMA(x: DenseVector[Double]): Double = {
         if (max(abs(x)) > 0.99)
@@ -198,19 +199,19 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
       val gradient = new ApproximateGradientFunction(f = EntropyARMA, epsilon = 1.0E-10)
       var zpar = xinit
       var entropy = EntropyARMA(zpar)
-      val entropyFundefault = new DiffFunction[DenseVector[Double]] {     
+      val entropyFundefault = new DiffFunction[DenseVector[Double]] {
         def calculate(x: DenseVector[Double]) = {
-           if (entropy > gradient.valueAt(x)) {
-             zpar = x
-             entropy = gradient.valueAt(x)
-           }
+          if (entropy > gradient.valueAt(x)) {
+            zpar = x
+            entropy = gradient.valueAt(x)
+          }
           gradient.calculate(x)
         }
       }
 
-      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)    
+      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)
       // another optimizer could be used here, to be implmented.
-      
+
       loglikelihood = entropy
       convergence = statedef.converged
       phiHat = PacfToAR(zpar(0 until p))
@@ -230,19 +231,19 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
       val gradient = new ApproximateGradientFunction(f = EntropyARMA, epsilon = 1.0E-10)
       var zpar = xinit
       var entropy = EntropyARMA(zpar)
-      val entropyFundefault = new DiffFunction[DenseVector[Double]] {     
+      val entropyFundefault = new DiffFunction[DenseVector[Double]] {
         def calculate(x: DenseVector[Double]) = {
-           if (entropy > gradient.valueAt(x)) {
-             zpar = x
-             entropy = gradient.valueAt(x)
-           }
+          if (entropy > gradient.valueAt(x)) {
+            zpar = x
+            entropy = gradient.valueAt(x)
+          }
           gradient.calculate(x)
         }
       }
 
-      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)    
+      val statedef = LBFGS.minimizeAndReturnState(f = entropyFundefault, init = xinit)
       // another optimizer could be used here, to be implmented.
-      
+
       loglikelihood = entropy
       convergence = statedef.converged
       phiHat = PacfToAR(zpar(0 until p))
@@ -253,12 +254,20 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
     (-loglikelihood, phiHat, thetaHat, "L-BFGS", convergence)
   }
 
-  def fit_start_params(y : DenseVector[Double]): DenseVector[Double] = {
+  def fit_start_params(y: DenseVector[Double]): DenseVector[Double] = {
     var start_params_New = DenseVector.zeros[Double](p + q)
     if (start_params.length == 1 && start_params(0) == 0.0) {
       if (q != 0) {
         if (p != 0) {
-          val (phi, theta, sigma2, se_phi, se_theta) = Hannan_Rissanen(y)
+          val Hannan_params = try {
+            Some(Hannan_Rissanen(y))
+          } catch {
+            case e: Exception => None
+          }
+          val (phi, theta, sigma2, se_phi, se_theta) = Hannan_params match {
+            case Some(a) => (a._1, a._2, a._3, a._4, a._5)
+            case None => (DenseVector[Double](), DenseVector[Double](), NaN, DenseVector[Double](), DenseVector[Double]())
+          }
           start_params_New = DenseVector.vertcat(phi, theta)
         } else {
           val inittheta = MovingAverage.train(data = data, q = q, recursion_level = q).theta
@@ -277,34 +286,45 @@ class ARIMA(data: Array[Double], order: (Int, Int, Int), method: String, xv: Lis
   def run(): ARIMA_Model = {
     if (checkOrder) sys.error("Order p + q + 20 is too large, larger than max order n-1" +
       ",or q less than 1 , or larger than  min(n-1, 20*log10(n))")
-    var resid = Resid(x, d, demean, xv)
-    if (!demean) resid = Resid(x, d, demean, xv)
-//    println(resid)
-    val (phi, theta, sigma2, se_phi, se_theta) = Hannan_Rissanen(resid)
-    val start_params = fit_start_params(resid)
+    var xt = x
+    if (Box_Cox) xt = BoxCox(x, Lambda)
+    var resid = Resid(xt, d, demean, xv)
+    val Hannan_params = try {
+      if (p != 0 || q != 0) Some(Hannan_Rissanen(resid))
+      else Some((DenseVector[Double](), DenseVector[Double](), NaN, DenseVector[Double](), DenseVector[Double]()))
+    } catch {
+      case e: Exception => None
+    }
+    val (phi, theta, sigma2, se_phi, se_theta) = Hannan_params match {
+      case Some(a) => (a._1, a._2, a._3, a._4, a._5)
+      case None => (DenseVector[Double](), DenseVector[Double](), NaN, DenseVector[Double](), DenseVector[Double]())
+    }
     if (method.contains("hannan")) {
       val result_Hannan = (phi, theta, sigma2)
       val (new_sigma2, aicc) = innovation_update(x = resid, model = result_Hannan)
       val new_result_Hannan = (phi, theta, new_sigma2, aicc)
-      new ARIMA_Model(x, xv, new_result_Hannan, order)
+      new ARIMA_Model(x, resid, xv, Box_Cox, Lambda, new_result_Hannan, order)
     } else {
+      var start_params_ = start_params
+      if (start_params.length == 1 && !all(start_params)) {
+        start_params_ = fit_start_params(resid)
+      }
       var result_MLE = FitARMA(resid, p, q, pAppro = pAppro, demean = demean,
-        MeanMLEQ = MeanMLEQ, MaxLag = MaxLag, start_params = start_params)
-      val model = (result_MLE._2, result_MLE._3,result_MLE._4)
+        MeanMLEQ = MeanMLEQ, MaxLag = MaxLag, start_params = start_params_)
+      val model = (result_MLE._2, result_MLE._3, result_MLE._4)
       val (new_sigma2, aicc) = innovation_update(x = resid, model = model)
       result_MLE = result_MLE.copy(_4 = new_sigma2, _5 = aicc)
-      new ARIMA_Model(x, xv, result_MLE)
+      new ARIMA_Model(x, resid, xv, Box_Cox, Lambda, result_MLE)
     }
   }
 
 }
 
+class ARIMA_Model(y: DenseVector[Double], resid: DenseVector[Double], xv: List[String] = List(), Box_Cox: Boolean, Lambda: Double,
+  result: (Double, DenseVector[Double], DenseVector[Double], Double, Double, Double, DenseVector[Double], DenseMatrix[Double], DenseVector[Double], DenseVector[Double], Boolean, Int, Boolean, Boolean, (Int, Int, Int))) {
 
-class ARIMA_Model(y: DenseVector[Double], xv: List[String] = List(), 
-    result: (Double, DenseVector[Double], DenseVector[Double], Double, Double, Double, DenseVector[Double], DenseMatrix[Double], DenseVector[Double], DenseVector[Double], Boolean, Int, Boolean, Boolean, (Int, Int, Int))) {
-
-  def this(y: DenseVector[Double], xv: List[String], result: (DenseVector[Double], DenseVector[Double], Double, Double), order: (Int, Int, Int)) {
-    this(y, xv, (0.0, result._1, result._2, result._3, result._4 , 0.0, DenseVector.zeros[Double](0), DenseMatrix.zeros[Double](0, 0),
+  def this(y: DenseVector[Double], resid: DenseVector[Double], xv: List[String], Box_Cox: Boolean = false, Lambda: Double = 0.5, result: (DenseVector[Double], DenseVector[Double], Double, Double), order: (Int, Int, Int)) {
+    this(y, resid, xv, Box_Cox, Lambda, (0.0, result._1, result._2, result._3, result._4, 0.0, DenseVector.zeros[Double](0), DenseMatrix.zeros[Double](0, 0),
       DenseVector.zeros[Double](0), DenseVector.zeros[Double](0), true, 0, false, false, order))
   }
 
@@ -312,151 +332,53 @@ class ARIMA_Model(y: DenseVector[Double], xv: List[String] = List(),
     (result._1, result._2, result._3, result._4, result._5, result._6, result._7, result._8, result._9, result._10, result._11, result._12, result._13, result._14, result._15)
 
   val model = (phiHat, thetaHat, sigsq)
-  val x = y
+  var xt = y
+  if (Box_Cox) xt = BoxCox(y, Lambda)
   val d = order._2
+  var xv2 = xv
+  if (d != 0 && !xv.contains("diff")) xv2 = "diff" :: "1" :: xv
 
   def adf_Test() = {
-    println("ADF Test = " + adfTest(y))
+    println("ADF Test = " + adfTest(resid))
   }
-  
-  private def forecast_arma(y: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double), h: Int): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    val n = y.length
-    var mu = mean(y)
-    if (!demean) mu = 0.0
-    var x = y - mu
-    val phi = model._1
-    val theta = model._2
-    var dx = innovations(x = x, model = model)
-    dx = DenseVector.vertcat(dx, DenseVector.zeros[Double](h))
-    x = DenseVector.vertcat(x, DenseVector.zeros[Double](h))
-    val p = phi.length
-    val q = theta.length
-    for (t <- n to n + h - 1) {
-      val A = phi dot reverse(x(t - p to t - 1))
-      val B = theta dot reverse(dx(t - q to t - 1))
-      x(t) = A + B
+
+  def print_train_data(): Unit = {
+    println("Resids for constructing ARIMA model = " + resid)
+  }
+
+  def predict(predictionLength: Int = 12, enableBound: Boolean = false, leastBound: Int = 0, upperBound: Int = 60000): (Array[Double], Array[Double], Array[Double], Array[Double]) = {
+    var (pred, se, l, u) = forecast(x = xt, xv = xv2, model = model, d = d, h = predictionLength, k = 1, demean = demean, enableBound = enableBound, leastBound = leastBound, upperBound = upperBound)
+    if (Box_Cox) {
+      pred = InvBoxCox(pred, Lambda)
+      l = InvBoxCox(l, Lambda)
+      u = InvBoxCox(u, Lambda)
+      se = (u - l) / (2 * 1.96)
     }
-    val pred = x(n to n + h - 1) + mu
-    (pred, phi, null, null)
+    if (se != null) (pred.toArray, se.toArray, l.toArray, u.toArray)
+    else (pred.toArray, null, l.toArray, u.toArray)
   }
 
-  private def forecast_diff(x: DenseVector[Double], d: Int, xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    val n = x.length
-    var lag = 1
-    if (xv(k - 1) == "diff") lag = xv(k).toInt
-    val differences = d
-    val y = diff(x, lag, differences)
-    var (pred, phi, l, u) = forecast_transform(x = y, xv = xv, model = model, h = h, k = k + 2)
-    pred = diffinv(pred, lag, differences, x(n - lag*differences to n - 1))
-    pred = pred(lag to lag + h - 1)
-    if (phi == null) sys.error("diff before log")
-    phi = DenseVector[Double](1.0 +: (-phi).toArray)
-    phi = DenseVector.vertcat(phi, DenseVector.fill[Double](lag, 0.0)) - DenseVector.vertcat(DenseVector.fill[Double](lag, 0.0), phi)
-    phi = -phi(1 until phi.length)
-    (pred, phi, l, u)
-  }
-
-  
-  private def forecast_log(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    var (pred, phi, l, u) = forecast_transform(x = log(x), xv = xv, model = model, h = h, k = k + 1)
-    if (phi != null) {
-      val theta = model._2
-      val sigma2 = model._3
-      val psi = ma_inf(phi = phi, theta = theta, n = h)
-      def g(j: Int) = sum(pow(psi(0 to j - 1), 2))
-      val se = DenseVector.zeros[Double](h)
-      for (i <- 1 to h) se(i - 1) = sqrt(sigma2 * g(i))
-      l = pred - (se * 1.96)
-      u = pred + (se * 1.96)
+  def predict_DenseVector(predictionLength: Int = 12, enableBound: Boolean = false, leastBound: Int = 0, upperBound: Int = 60000): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
+    var (pred, se, l, u) = forecast(x = xt, xv = xv2, model = model, d = d, h = predictionLength, k = 1, demean = demean, enableBound = enableBound, leastBound = leastBound, upperBound = upperBound)
+    if (Box_Cox) {
+      pred = InvBoxCox(pred, Lambda)
+      l = InvBoxCox(l, Lambda)
+      u = InvBoxCox(u, Lambda)
+      se = (u - l) / (2 * 1.96)
     }
-    pred = exp(pred)
-    l = exp(l)
-    u = exp(u)
-    (pred, null, l, u)
+    if (se != null) (pred, se, l, u)
+    else (pred, null, l, u)
   }
 
-  private def forecast_season(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int = 1): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    val n = x.length
-    val d = xv(k).toInt
-    val q = d / 2
-    def F1(t: Int): Double = x(t - q - 1) / 2 + sum(x(t - q to t + q - 2)) + x(t + q - 1) / 2
-    var m = DenseVector.zeros[Double](n - 2 * q)
-    for (i <- q + 1 to n - q) m(i - q - 1) = F1(i) / d
-    m = DenseVector[Double](Array.fill[Double](q)(0) ++ m.toArray ++ Array.fill[Double](q)(0))
-    if (d != 2 * q) m = smooth_ma(x, q)
-    val dx = x - m
-    def F2(k: Int): Double = mean(dx(k + q - 1 to n - q - 1 by d))
-    var w = DenseVector.zeros[Double](d)
-    for (i <- 1 to d) w(i - 1) = F2(i)
-    w = w - mean(w)
-    var s = w
-    for (i <- 1 until n + q + h) s = DenseVector.vertcat(s, w)
-    s = s(q to q + n + h - 1)
-    val y = x - s(0 until n)
-    var (pred, phi, l, u) = forecast_transform(x = y, xv = xv, model = model, h = h, k = k + 2)
-    pred = pred + s(n to n + h - 1)
-    if (phi == null) {
-      l = l + s(n to n + h - 1)
-      u = u + s(n to n + h - 1)
+  def print_Predictions(predictionLength: Int = 12, enableBound: Boolean = false, leastBound: Int = 0, upperBound: Int = 60000): Unit = {
+    var (pred, se, l, u) = forecast(x = xt, xv = xv2, model = model, d = d, h = predictionLength, k = 1, demean = demean, enableBound = enableBound, leastBound = leastBound, upperBound = upperBound)
+    if (Box_Cox) {
+      pred = InvBoxCox(pred, Lambda)
+      l = InvBoxCox(l, Lambda)
+      u = InvBoxCox(u, Lambda)
+      se = (u - l) / (2 * 1.96)
     }
-    (pred, phi, l, u)
-  }
-
-  private def forecast_trend(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int = 1): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    val n = x.length
-    val p = xv(k).toInt
-    val X = DenseMatrix.zeros[Double](n + h, p + 1)
-    for (j <- 0 to p) X(::, j) := pow(DenseVector.rangeD(1.0, n + h + 1), j)
-    val b = X(0 until n, ::) \ x
-    val xhat = X * b
-    val y = x - xhat(0 until n)
-    var (pred, phi, l, u) = forecast_transform(x = y, xv = xv, model = model, h = h, k = k + 2)
-    pred = pred + xhat(n until n + h)
-    if (phi == null) {
-      l = l + xhat(n until n + h)
-      u = u + xhat(n until n + h)
-    }
-    (pred, phi, l, u)
-  }
-
-  private def forecast_transform(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int = 1): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    if (k > xv.length) return forecast_arma(y = x, model = model, h = h)
-    if (xv(k - 1) == "diff") return forecast_diff(x = x, d = d, xv = xv, model = model, h = h, k = k)
-    if (xv(k - 1) == "log") return forecast_log(x = x, xv = xv, model = model, h = h, k = k)
-    if (xv(k - 1) == "season") return forecast_season(x = x, xv = xv, model = model, h = h, k = k)
-    if (xv(k - 1) == "trend") return forecast_trend(x = x, xv = xv, model = model, h = h, k = k)
-    else sys.error("x vector transformation is invalid")
-  }
-
-  private def forecast(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), h: Int, k: Int = 1): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    var (pred, phi, l, u) = forecast_transform(x = x, xv = xv, model = model, h = h, k = 1)
-    val se = DenseVector.zeros[Double](h)
-    if (phi != null) {
-      val theta = model._2
-      val psi = ma_inf(phi = phi, theta = theta, n = h)
-      val sigma2 = model._3
-      def g(j: Int): Double = sum(pow(psi(0 until j), 2))
-      for (i <- 1 to h) se(i - 1) = sqrt(sigma2 * g(i))
-      l = pred - (se * 1.96)
-      u = pred + (se * 1.96)
-    }
-    else return (pred, null, l, u)
-    (pred, se, l, u)
-  }
-
-  def predict(predictionLength: Int = 12): (Array[Double], Array[Double], Array[Double], Array[Double]) = {
-    val (pred, se, l, u) = forecast(x = y, xv = xv, model = model, h = predictionLength, k = 1)
-    (pred.toArray, se.toArray, l.toArray, u.toArray)
-  }
-  
-  def predict_DenseVector(predictionLength: Int = 12): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
-    val (pred, se, l, u) = forecast(x = y, xv = xv, model = model, h = predictionLength, k = 1)
-    (pred, se, l, u)
-  }
-  
-  def print_Predictions(predictionLength: Int = 12): Unit = {
-    val (pred, se, l, u) = forecast(x = y, xv = xv, model = model, h = predictionLength, k = 1)
-    println("length of predictions =" + predictionLength)
+    println("length of predictions = " + predictionLength)
     println("predictions : " + pred)
     if (se != null) println("sqrt(MSE) = " + se)
     println("Lower Bound = " + l)
@@ -466,26 +388,45 @@ class ARIMA_Model(y: DenseVector[Double], xv: List[String] = List(),
   def print_ARIMA_Model(): Unit = {
     val LL = loglikelihood
     var k = order._1 + order._3
+    val numofparams = order._1 + order._3
     if (demean) k += 1
     val n = res.length
     val aic = -2 * LL + 2 * k
     val bic = -2 * LL + log(n) * k
-    println("length of series = " + n + ",  number of parameters = " + k)
-    println("differences = " + order._2)
+    println("length of series = " + n + ",  number of parameters = " + numofparams)
+    println("phi = " + order._1 + ", differences = " + order._2 + ", theta = " + order._3)
     println("phi = " + phiHat)
     println("theta = " + thetaHat)
     println("sigma^2 = " + sigsq + ", mu = " + muHat)
     println("loglikelihood = " + LL + ",  aic = " + aic + ",  bic = " + bic + ", aicc = " + aicc)
   }
-  
+
+  def print_coef_states(): Unit = {
+    println("phi = " + phiHat)
+    println("theta = " + thetaHat)
+    println("iter = " + iter)
+    println("convergence = " + convergence)
+  }
+
   def print_LjungBox(): Unit = {
     println("Ljung-Box : " + lbq)
   }
+
+  def print_res_and_fits(): Unit = {
+    println("Residuals : " + res)
+    println("fits : " + fits)
+    println("residual autocorrelations : " + racf)
+  }
+
+  def model_res_and_fits(): (DenseVector[Double], DenseVector[Double]) = {
+    (res, fits)
+  }
+
 }
 
 object ARIMA {
   def train(data: Array[Double], order: (Int, Int, Int) = (1, 0, 1), method: String = "MLE", xv: List[String] = List(), pAppro: Int = 30, demean: Boolean = true,
-      MeanMLEQ: Boolean = false, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1)): ARIMA_Model = {
-    new ARIMA(data = data, order = order, method = method, xv = xv, pAppro = pAppro, demean = demean, MeanMLEQ = MeanMLEQ, MaxLag = MaxLag, start_params).run()
+    MeanMLEQ: Boolean = false, Box_Cox: Boolean = false, Lambda: Double = 0.5, MaxLag: Int = 30, start_params: DenseVector[Double] = DenseVector.zeros[Double](1)): ARIMA_Model = {
+    new ARIMA(data = data, order = order, method = method, xv = xv, pAppro = pAppro, demean = demean, MeanMLEQ = MeanMLEQ, Box_Cox = Box_Cox, Lambda = Lambda, MaxLag = MaxLag, start_params).run()
   }
 }

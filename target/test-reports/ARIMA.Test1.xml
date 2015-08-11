@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite hostname="BOSL24470" name="ARIMA.Test1" tests="56" errors="0" failures="0" time="0.142">
+                     <properties>
+      <property name="jline.esc.timeout" value="0"/><property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/><property name="sun.boot.library.path" value="C:\Program Files\Java\jre1.8.0_45\bin"/><property name="java.vm.version" value="25.45-b02"/><property name="java.vm.vendor" value="Oracle Corporation"/><property name="java.vendor.url" value="http://java.oracle.com/"/><property name="path.separator" value=";"/><property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/><property name="file.encoding.pkg" value="sun.io"/><property name="user.country" value="IE"/><property name="user.script" value=""/><property name="sun.java.launcher" value="SUN_STANDARD"/><property name="sun.os.patch.level" value="Service Pack 1"/><property name="java.vm.specification.name" value="Java Virtual Machine Specification"/><property name="user.dir" value="D:\workspace\ARIMA"/><property name="java.runtime.version" value="1.8.0_45-b15"/><property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/><property name="java.endorsed.dirs" value="C:\Program Files\Java\jre1.8.0_45\lib\endorsed"/><property name="os.arch" value="amd64"/><property name="java.io.tmpdir" value="C:\Users\wangj\AppData\Local\Temp\"/><property name="line.separator" value="
+"/><property name="java.vm.specification.vendor" value="Oracle Corporation"/><property name="user.variant" value=""/><property name="os.name" value="Windows 7"/><property name="sun.jnu.encoding" value="GBK"/><property name="java.library.path" value="C:\ProgramData\Oracle\Java\javapath;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\Program Files (x86)\Box\Box Edit\;C:\Program Files (x86)\sbt\\bin;D:\Python34;d:\scala\bin;C:\Program Files (x86)\CVSNT\;."/><property name="java.specification.name" value="Java Platform API Specification"/><property name="java.class.version" value="52.0"/><property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/><property name="os.version" value="6.1"/><property name="user.home" value="C:\Users\wangj"/><property name="user.timezone" value="America/Indianapolis"/><property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/><property name="file.encoding" value="GBK"/><property name="java.specification.version" value="1.8"/><property name="sbt.log.format" value="true"/><property name="java.class.path" value="C:\Program Files (x86)\sbt\bin\sbt-launch.jar"/><property name="user.name" value="wangj"/><property name="jline.shutdownhook" value="false"/><property name="java.vm.specification.version" value="1.8"/><property name="sun.java.command" value="xsbt.boot.Boot"/><property name="java.home" value="C:\Program Files\Java\jre1.8.0_45"/><property name="sun.arch.data.model" value="64"/><property name="user.language" value="en"/><property name="java.specification.vendor" value="Oracle Corporation"/><property name="awt.toolkit" value="sun.awt.windows.WToolkit"/><property name="java.vm.info" value="mixed mode"/><property name="java.version" value="1.8.0_45"/><property name="java.ext.dirs" value="C:\Program Files\Java\jre1.8.0_45\lib\ext;C:\windows\Sun\Java\lib\ext"/><property name="sun.boot.class.path" value="C:\Program Files\Java\jre1.8.0_45\lib\resources.jar;C:\Program Files\Java\jre1.8.0_45\lib\rt.jar;C:\Program Files\Java\jre1.8.0_45\lib\sunrsasign.jar;C:\Program Files\Java\jre1.8.0_45\lib\jsse.jar;C:\Program Files\Java\jre1.8.0_45\lib\jce.jar;C:\Program Files\Java\jre1.8.0_45\lib\charsets.jar;C:\Program Files\Java\jre1.8.0_45\lib\jfr.jar;C:\Program Files\Java\jre1.8.0_45\classes"/><property name="java.vendor" value="Oracle Corporation"/><property name="sun.stderr.encoding" value="ms936"/><property name="file.separator" value="\"/><property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/><property name="sun.io.unicode.encoding" value="UnicodeLittle"/><property name="sun.cpu.endian" value="little"/><property name="sun.stdout.encoding" value="ms936"/><property name="sun.desktop" value="windows"/><property name="sun.cpu.isalist" value="amd64"/>
+    </properties>
+                     <testcase classname="ARIMA.Test1" name="The length of phi should be 3" time="0.03">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="The length of theta should be 2" time="0.03">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.004">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.003">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.002">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="1" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred1)" time="0.002">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred2)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred3)" time="0.003">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred4)" time="0.003">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred5)" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred6)" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred7)" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred8)" time="0.001">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred9)" time="0.003">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred10)" time="0.002">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred11)" time="0.002">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(pred12)" time="0.002">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE1)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE2)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE3)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE4)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE5)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE6)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE7)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE8)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE9)" time="0.01">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE10)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE11)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(sqrtMSE12)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l1)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l2)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l3)" time="0.01">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l4)" time="0.01">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l5)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l6)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l7)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l8)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l9)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l10)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l11)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(l12)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r1)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r2)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r3)" time="0.01">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r4)" time="0.01">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r5)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r6)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r7)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r8)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r9)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r10)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r11)" time="0.0">
+                                                 
+                                               </testcase><testcase classname="ARIMA.Test1" name="Code(r12)" time="0.0">
+                                                 
+                                               </testcase>
+                     <system-out></system-out>
+                     <system-err></system-err>
+                   </testsuite>

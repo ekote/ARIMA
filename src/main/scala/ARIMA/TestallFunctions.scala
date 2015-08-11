@@ -7,6 +7,7 @@ import breeze.interpolation.LinearInterpolator
 import org.apache.commons.math3.distribution.ChiSquaredDistribution
 import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression
 import stat.StatDenseVector
+import IO.Readcsv._
 
 
 object TestallFunctions {
@@ -814,7 +815,7 @@ object TestallFunctions {
   }
   
   def main(args: Array[String]) {
-    val x = Readcsv.read()
+    val x = csvReader("D://Data/sharefolder/testdata.csv")
     val y = DenseVector.rangeD(-10, 21)
     val zeta = DenseVector[Double](Array(0.4, 0.3, 0.2, 0.2, 0.3, 0.4))
     val phi = zeta(0 to 2)

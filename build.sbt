@@ -27,7 +27,8 @@ libraryDependencies  ++= Seq(
   // native libraries are not included by default. add this if you want them (as of 0.7)
   // native libraries greatly improve performance, but increase jar sizes.
   "org.scalanlp" %% "breeze-natives" % "0.10",
-  "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly()
+  "com.github.fommil.netlib" % "all" % "1.1.2" pomOnly(),
+  "org.json4s" %% "json4s-native" % "3.2.11"
 )
 
 resolvers ++= Seq(
