@@ -1,3 +1,10 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
+
 package common
 
 import breeze.linalg.{ DenseVector, DenseMatrix, sum, reverse }
@@ -10,8 +17,10 @@ import common.ARIMAUtils.{ embed, diff, smooth_ma, cumsum }
 import common.Innovations._
 import stat.StatDenseVector
 
+// Identification process
 object ARIMAIdTransUtils {
 
+  // Box Cox transformation with lambda
   def BoxCox(x: DenseVector[Double], lambda: Double): DenseVector[Double] = {
     var out = x.copy
     if (lambda < 0) out = out.map(v => if (v < 0) NaN else v)
@@ -20,6 +29,7 @@ object ARIMAIdTransUtils {
     out
   }
 
+  // Inverse of Box Cox transformation with lambda
   def InvBoxCox(x: DenseVector[Double], lambda: Double): DenseVector[Double] = {
     var out = x.copy
     if (lambda < 0) out = out.map(v => if (v > -1 / lambda) NaN else v)
@@ -31,6 +41,16 @@ object ARIMAIdTransUtils {
     out
   }
 
+  /* ADF test, Computes the Augmented Dickey-Fuller test for the null that x has a unit root. arugments:
+   * x: time series
+   * alternative: stationary as alternative hypothesis
+   * lag: the lag order to calculate the test statistic.
+   * return:
+   * Statistic: the value of the test statistic.
+   * parameters: the lag order.
+   * alternative hypothesis
+   * p-value: the p-value of the test.
+   */  
   def adfTest(x: DenseVector[Double], alternative: String = "Stationary", lag: Int = 0): (Double, Double, String, Double) = {
     var k = lag
     if (lag == 0) k = pow((x.length - 1), (1.0 / 3)).toInt
@@ -74,6 +94,15 @@ object ARIMAIdTransUtils {
     (STAT, PARAMETER, alternative, PVAL)
   }
 
+  /* Ljung Box Test, arugments:
+   * res: time series
+   * k: order p+ order q
+   * maxlag: number of max lag
+   * StartLag: test is done for lags m=StartLag:MaxLag, default StartLag = 1
+   * SquaredQ: if TRUE, use squared residuals for ARCH test, default Squared = FALSE
+   * return :
+   * A matrix with columns labelled m, Qm, pvalue, where m is the lag and Qm is the Ljung-Box Portmanteau statistic and pvalue its p-value.
+   */  
   def LjungBoxTest(res: DenseVector[Double], k: Int = 0, maxlag: Int = 30, StartLag: Int = 1, SquaredQ: Boolean = false): DenseMatrix[Double] = {
     if (!(k >= 0 && StartLag >= 1 && maxlag >= StartLag)) sys.error("Should be k >= 0 and StartLag >= 1 and maxlag >= StartLag, please check again")
     val n = res.length
@@ -101,6 +130,7 @@ object ARIMAIdTransUtils {
     a
   }
 
+  // detect seasonal components
   def season(x: DenseVector[Double], d: Int): DenseVector[Double] = {
     val n = x.length
     val q = d / 2
@@ -119,6 +149,7 @@ object ARIMAIdTransUtils {
     s(q to q + n - 1)
   }
 
+  // detect trend components
   def trend(x: DenseVector[Double], p: Int): DenseVector[Double] = {
     val n = x.length
     val X = DenseMatrix.zeros[Double](n, p + 1)
@@ -128,6 +159,7 @@ object ARIMAIdTransUtils {
     xhat
   }
 
+  // according to transformation list provided, do proper transformation.
   def Resid(x: DenseVector[Double], d: Int = 0, demean: Boolean = true, xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double) = null): DenseVector[Double] = {
     var y = x
     var k = 1

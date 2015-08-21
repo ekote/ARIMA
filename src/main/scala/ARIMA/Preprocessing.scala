@@ -11,9 +11,6 @@ import breeze.linalg.DenseVector
 import stat.StatDenseVector
 import breeze.numerics.sqrt
 import breeze.stats.mean
-/*import breeze.stats._
-import org.apache.commons.math3.distribution.ChiSquaredDistribution
-*/
 
 
 abstract class Preprocessing(data: Array[Double]) {

@@ -1,8 +1,15 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
 package ARIMA
 
 import breeze.linalg._
 import IO.Readcsv._
 
+// test MA model
 object TestMA {
  
 	def main(args: Array[String]) {

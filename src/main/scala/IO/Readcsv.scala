@@ -1,8 +1,13 @@
-
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
 package IO
 
 import scala.io.{Source}
 
+// a simple csv reader
 object Readcsv {
 
   def csvReader(path: String) = {

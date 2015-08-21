@@ -1,3 +1,11 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
+// package TimeSeriesForecast.ARIMA
+
 package ARIMA
 
 import breeze.linalg._
@@ -9,7 +17,8 @@ import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression
 import stat.StatDenseVector
 import IO.Readcsv._
 
-
+// this is an object to test most of functions used in the implementations
+// should not be used
 object TestallFunctions {
 
   def toeplitz(x: DenseVector[Double]) = {

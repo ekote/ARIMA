@@ -22,10 +22,12 @@ class MovingAverage(data: Array[Double], q: Int, recursion_level: Int) extends P
   private val v = DenseVector.zeros[Double](maxOrder + 1)
   private val setheta = DenseVector.zeros[Double](q)
 
+  // check if order is valid, check if recursion level is less than q.
   def checkOrder: Boolean = q > maxOrder || q < 1
 
   def checkRecursionLevel: Boolean = recursion_level < q
 
+  // Innovations algorithm
   def Innovations_algorithm(data: Array[Double] = data, q: Int = q, recursion_level: Int = recursion_level): DenseVector[Double] = {
 
     v(0) = acvf(0)
@@ -56,6 +58,7 @@ class MovingAverage(data: Array[Double], q: Int, recursion_level: Int) extends P
     theta(recursion_level, 1 to q).t
   }
 
+  // build MA model
   def run(): MovingAverageModel = {
     if (checkOrder) sys.error("Order p is too large, larger than max order min(n-1, 20*log10(n)) or less than 1")
 
@@ -76,6 +79,7 @@ class MovingAverage(data: Array[Double], q: Int, recursion_level: Int) extends P
   }
 }
 
+// main class of MA model. y: time seris, mu: mean, results results of MA, coefficients of MA, sigma square and standard deviation of MA parameters
 class MovingAverageModel(y: DenseVector[Double], mu: Double, result: (DenseVector[Double], Double, DenseVector[Double])) {
 
   val theta = result._1
@@ -83,11 +87,14 @@ class MovingAverageModel(y: DenseVector[Double], mu: Double, result: (DenseVecto
   val se_theta = result._3
   val model = (DenseVector[Double](), theta, sigma2)
 
+  // make prediction with prediction Length
+  // same as ARIMA model predict()
   def predict(predictionLength: Int = 12, enableBound: Boolean = false, leastBound: Int = 0, upperBound: Int = 60000): Array[Double] = {
     val (pred, se, l, u) = forecast(x = y, xv = List(), model = model, d = 0, h = predictionLength, k = 1, demean = true, enableBound = enableBound, leastBound = leastBound, upperBound = upperBound)
     pred.toArray
   }
 
+  // print MA model results
   def print_Result(): Unit = {
     println(result)
   }

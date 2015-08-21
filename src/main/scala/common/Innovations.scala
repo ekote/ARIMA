@@ -1,9 +1,17 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
+
 package common
 
 import breeze.linalg._
 import breeze.numerics.{ pow, log, constants, abs }
 import common.ARIMAUtils._
 
+// this object is to provide Innovation algorithm
 object Innovations {
 
   def innovations(x: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double)): DenseVector[Double] = {
@@ -11,6 +19,7 @@ object Innovations {
     x - xhat
   }
 
+  // calculate aicc with innovations algorithm
   def innovation_update(x: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double)): (Double, Double) = {  
     val model2 = model.copy( _3 = 1.0)
     val (xhat, v) = innovation_kernel(x = x, model = model)
@@ -27,6 +36,7 @@ object Innovations {
     (sigma2, aicc)
   }
   
+  // calculate kernel in innovations algorithm
   def innovation_kernel(x: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double)) = {
     val phi = model._1
     val theta = model._2

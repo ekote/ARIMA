@@ -1,3 +1,9 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
 package common
 
 import breeze.linalg.{ DenseVector, DenseMatrix, reverse, sum }
@@ -6,7 +12,10 @@ import breeze.stats.{ mean }
 import common.ARIMAUtils.{ diff, diffinv, ma_inf, smooth_ma }
 import common.Innovations._
 
+// forecast object
 object Forecast {
+  
+  // use innovation algorithm do forecasting
   private def forecast_arma(y: DenseVector[Double], model: (DenseVector[Double], DenseVector[Double], Double), h: Int, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     val n = y.length
     var mu = mean(y)
@@ -28,6 +37,7 @@ object Forecast {
     (pred, phi, null, null)
   }
 
+  // forecast with differences
   private def forecast_diff(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     val n = x.length
     var lag = 1
@@ -44,6 +54,7 @@ object Forecast {
     (pred, phi, l, u)
   }
 
+  // forecast with log transformation
   private def forecast_log(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     var (pred, phi, l, u) = forecast_transform(x = log(x), xv = xv, model = model, d = d, h = h, k = k + 1, demean = demean)
     if (phi != null) {
@@ -62,6 +73,7 @@ object Forecast {
     (pred, null, l, u)
   }
 
+  // forecast with the elimination of seasonal components
   private def forecast_season(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     val n = x.length
     val d = xv(k).toInt
@@ -88,7 +100,8 @@ object Forecast {
     }
     (pred, phi, l, u)
   }
-
+  
+  // forecast with the elimination of trend components
   private def forecast_trend(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int = 1, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     val n = x.length
     val p = xv(k).toInt
@@ -106,6 +119,7 @@ object Forecast {
     (pred, phi, l, u)
   }
 
+  // forecast methods call other forecast transformation methods
   private def forecast_transform(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int = 1, demean: Boolean): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     if (k > xv.length) return forecast_arma(y = x, model = model, h = h, demean = demean)
     if (xv(k - 1) == "diff") return forecast_diff(x = x, xv = xv, model = model, d = d, h = h, k = k, demean = demean)
@@ -115,6 +129,7 @@ object Forecast {
     else sys.error("x vector transformation is invalid")
   }
 
+  // main method to forecast and conclude the results
   def forecast(x: DenseVector[Double], xv: List[String] = List(), model: (DenseVector[Double], DenseVector[Double], Double), d: Int, h: Int, k: Int = 1, demean: Boolean, enableBound: Boolean = false, leastBound: Int, upperBound: Int): (DenseVector[Double], DenseVector[Double], DenseVector[Double], DenseVector[Double]) = {
     var (pred, phi, l, u) = forecast_transform(x = x, xv = xv, model = model, d = d, h = h, k = 1, demean = demean)
     val se = DenseVector.zeros[Double](h)

@@ -2,7 +2,7 @@ package stat
 
 import breeze.linalg.DenseVector
 
-
+// you may use gradience approximation here to elevate the accuracy, default is using breeze package
 object GradientApproximation {
     
   def gradientApproximate(f: DenseVector[Double] => Double, x: DenseVector[Double], h: Double): DenseVector[Double] = {

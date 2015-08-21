@@ -1,8 +1,14 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
 package IO
 
 import Readcsv._
 import breeze.linalg.{DenseVector}
 
+// this object is to change the daily data to the specific data, weekly if set steps to 7 and monthly if set steps to 30
 object DateFrequency {
   
   def FromDaily(data: Array[Double],steps: Int = 7): Array[Double] = {

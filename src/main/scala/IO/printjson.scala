@@ -1,12 +1,18 @@
-
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
 package IO
 
 import IO.ParseJson._
 import java.io._
 import IO.DateFrequency._
 
+// this object is to parse Json and output into a file
 object printjson {
 
+  
   def printToFile(f: java.io.File)(op: java.io.PrintWriter => Unit) {
     val p = new java.io.PrintWriter(f)
     try { op(p) } finally { p.close() }

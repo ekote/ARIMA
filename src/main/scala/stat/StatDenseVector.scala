@@ -11,7 +11,7 @@ import breeze.stats._
 import breeze.numerics._
 import breeze.stats.mean.reduce_Double
 import breeze.stats.variance.reduceDouble
-
+// a defined statistic densevector class, including computed autocorrelation, covariance, autocovariance and to Densevector
 class StatDenseVector (X : Array[Double],unbiased: Boolean = false) extends DenseVector(X : Array[Double]){
   
 	val n = X.length

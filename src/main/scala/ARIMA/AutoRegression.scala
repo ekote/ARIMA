@@ -19,7 +19,7 @@ class AutoRegression (data : Array[Double], p : Int) extends Preprocessing(data 
   private val v = DenseVector.zeros[Double](maxOrder+1)    
   
   def checkOrder : Boolean = p > maxOrder
-  
+  // Durbin Levinson algorithm
   def durbinLevinson(data : Array[Double] = data, p : Int = p) : DenseVector[Double] = {
     v(0) = acvf(0)
 	    
@@ -40,6 +40,7 @@ class AutoRegression (data : Array[Double], p : Int) extends Preprocessing(data 
 	phi(p,1 to p).t 
   }
   
+  // build AR model
   def run() : AutoRegressionModel = {
     
 //  a little bit different (maybe R's optimization?) with what in R with ar.yw() function. 
@@ -60,11 +61,15 @@ class AutoRegression (data : Array[Double], p : Int) extends Preprocessing(data 
   }
 }
 
+// main class of AR model, y: time series, mu: mean, result: fitted AR model with coefficients and sigma square
+
 class AutoRegressionModel (y : StatDenseVector, mu : Double , result : (DenseVector[Double], Double)) {
   val n = y.n
   val phi = result._1
   val sigma2 = result._2
   private val p = phi.length
+  
+  // predict helper, predict next one value
   private def predictOne (newy : Array[Double], lastIDX : Int) : Double = {
     var sum = 0.0
     for (j <- 0 until p){
@@ -73,6 +78,9 @@ class AutoRegressionModel (y : StatDenseVector, mu : Double , result : (DenseVec
     sum
   }
   
+  // predict with length h
+  // predictionLenght: the length of prediction
+  // return Array[Double] prediction values
   def predict (predictionLength: Int = 12) : Array[Double] = {
     val forecast = DenseVector.zeros[Double](predictionLength)
     val newy = new Array[Double](p + predictionLength)
@@ -88,6 +96,7 @@ class AutoRegressionModel (y : StatDenseVector, mu : Double , result : (DenseVec
     forecast.map(f => f + mu).toArray
   }
   
+  // print model results
   def print_Result() : Unit = {
     println(result)
   }

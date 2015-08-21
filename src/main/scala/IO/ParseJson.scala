@@ -1,9 +1,16 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
 package IO
 
 import scala.io.{ Source }
 import org.json4s._
 import org.json4s.native.JsonMethods._
 
+// this object is to parse Json using Json4s
 object ParseJson {
   def parseJson(path: String, startdate: String, enddate: String) = {
     implicit val formats = DefaultFormats

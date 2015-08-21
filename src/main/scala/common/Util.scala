@@ -1,3 +1,9 @@
+/**
+ * @author  Jian Wang
+ * @version 1.0
+ * @date    10/06/2015
+ */
+
 package common
 
 import breeze.linalg.{ DenseVector, DenseMatrix, reverse, max, min, sum, diag }
@@ -6,6 +12,7 @@ import breeze.numerics.{ abs, pow, sqrt, log }
 import stat.StatDenseVector
 import common.Innovations._
 
+// this object includes most of the utils functions for AR, MA, ARIMA model
 object ARIMAUtils {
 
   def trunc(x: Double): Double = x.toInt.toDouble
